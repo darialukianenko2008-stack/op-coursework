@@ -10,9 +10,9 @@ namespace Сoursework.Models
         public DifficultyOfQuestion Difficulty { get; }
         public string TextOfQuestion { get; }
         public string Answer { get; }
-        public double SuccessRate { get; set; }
+        public double SuccessRate { get; set; } = 0;
 
-        public Question(int id, string topic, int difficulty, string textOfQuestion, string answer)
+        public Question(int id, string topic, DifficultyOfQuestion difficulty, string textOfQuestion, string answer)
         {
             Id = id;
             Topic = topic;
