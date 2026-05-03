@@ -1,7 +1,9 @@
+using Сoursework.Models;
+
 namespace Сoursework.Storage
 {
-    class SubjectRepo
+    public class SubjectRepo
     {
-
+        public List<Subject> subjects = new();
     }
 }

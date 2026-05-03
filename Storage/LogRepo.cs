@@ -1,7 +1,6 @@
 namespace Сoursework.Storage
 {
-    public class TestRepo
+    internal class LogRepo
     {
-
     }
 }
