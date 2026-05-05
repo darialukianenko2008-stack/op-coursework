@@ -6,10 +6,10 @@ namespace Сoursework.Models
     public class Question : IIdentifiable, IPrintable
     {
         public int Id { get; }
-        public string Topic { get; }
-        public DifficultyOfQuestion Difficulty { get; }
-        public string TextOfQuestion { get; }
-        public string Answer { get; }
+        public string Topic { get; set; }
+        public DifficultyOfQuestion Difficulty { get; set; }
+        public string TextOfQuestion { get; set; }
+        public string Answer { get; set; }
         public double SuccessRate { get; set; } = 0;
 
         public Question(int id, string topic, DifficultyOfQuestion difficulty, string textOfQuestion, string answer)
