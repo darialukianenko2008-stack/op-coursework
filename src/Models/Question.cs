@@ -3,14 +3,24 @@ using Сoursework.Interfaces;
 
 namespace Сoursework.Models
 {
-    public class Question : IIdentifiable, IPrintable
+    public abstract class Question : IIdentifiable, IPrintable
     {
         public int Id { get; }
         public string Topic { get; set; }
         public DifficultyOfQuestion Difficulty { get; set; }
         public string TextOfQuestion { get; set; }
         public string Answer { get; set; }
-        public double SuccessRate { get; set; } = 0;
+        public int TotalAttempts { get; private set; } = 0;
+        public int CorrectAttempts { get; private set; } = 0;
+
+        public double SuccessRate
+        {
+            get
+            {
+                if (TotalAttempts == 0) return 0;
+                return (double)CorrectAttempts / TotalAttempts * 100;
+            }
+        }
 
         public Question(int id, string topic, DifficultyOfQuestion difficulty, string textOfQuestion, string answer)
         {
@@ -21,9 +31,21 @@ namespace Сoursework.Models
             Answer = answer;
         }
 
+        public abstract bool CheckAnswer(string answer);
+        public abstract string PrintQuestion();
+
+        public void UpdateStatistics(bool isCorrect)
+        {
+            TotalAttempts++;
+            if (isCorrect)
+            {
+                CorrectAttempts++;
+            }
+        }
+
         public override string ToString()
         {
-            return $"Id: {Id}, Topic: {Topic}, Difficulty: {Difficulty}, Text of question: {TextOfQuestion}, Answer: {Answer}";
+            return $"Id: {Id}, {Topic}, {Difficulty}, {TextOfQuestion}, Answer: {Answer}, Success rate: {SuccessRate}.";
         }
     }
 }

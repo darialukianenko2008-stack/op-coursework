@@ -1,4 +1,4 @@
-using Сoursework.Models;
+using Сoursework.Models.TypesOfQuestion;
 using Сoursework.Storage;
 
 class Program
