@@ -6,7 +6,7 @@ namespace Сoursework.Models
     public abstract class Question : IIdentifiable, IPrintable
     {
         public int Id { get; }
-        public string Topic { get; set; }
+        public Subject Topic { get; }
         public DifficultyOfQuestion Difficulty { get; set; }
         public string TextOfQuestion { get; set; }
         public string Answer { get; set; }
@@ -22,7 +22,7 @@ namespace Сoursework.Models
             }
         }
 
-        public Question(int id, string topic, DifficultyOfQuestion difficulty, string textOfQuestion, string answer)
+        public Question(int id, Subject topic, DifficultyOfQuestion difficulty, string textOfQuestion, string answer)
         {
             Id = id;
             Topic = topic;

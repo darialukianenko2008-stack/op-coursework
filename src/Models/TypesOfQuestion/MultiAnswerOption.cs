@@ -6,8 +6,7 @@ namespace Сoursework.Models.TypesOfQuestion
     {
         public List<string> Options { get; set; }
 
-
-        public MultiAnswerOption(int id, string topic, DifficultyOfQuestion diff, string text, string answer, List<string> options) : base(id, topic, diff, text, answer)
+        public MultiAnswerOption(int id, Subject topic, DifficultyOfQuestion diff, string text, string answer, List<string> options) : base(id, topic, diff, text, answer)
         {
             Options = options;
         }
@@ -16,20 +15,20 @@ namespace Сoursework.Models.TypesOfQuestion
         {
             if (!string.IsNullOrWhiteSpace(userAnswer))
             {
-                List<int> userList = ParseStringToList(userAnswer);
-                List<int> correctList = ParseStringToList(Answer);
+                List<string> userList = ParseStringToList(userAnswer);
+                List<string> correctList = ParseStringToList(Answer);
 
                 if (userList.Count == 0 || userList.Count != correctList.Count)
                 {
                     return false;
                 }
 
-                userList.Sort();
-                correctList.Sort();
+                userList.Sort(StringComparer.OrdinalIgnoreCase);
+                correctList.Sort(StringComparer.OrdinalIgnoreCase);
 
                 for (int i = 0; i < userList.Count; i++)
                 {
-                    if (userList[i] != correctList[i])
+                    if (!userList[i].Equals(correctList[i], StringComparison.OrdinalIgnoreCase))
                     {
                         return false;
                     }
@@ -40,16 +39,17 @@ namespace Сoursework.Models.TypesOfQuestion
             return false;
         }
 
-        private List<int> ParseStringToList(string input)
+        private List<string> ParseStringToList(string input)
         {
-            List<int> result = new List<int>();
+            List<string> result = new();
             string[] parts = input.Split(new[] { ',', ' ', ';' }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string part in parts)
             {
-                if (int.TryParse(part.Trim(), out int val))
+                string trimmed = part.Trim();
+                if (!string.IsNullOrEmpty(trimmed))
                 {
-                    result.Add(val);
+                    result.Add(trimmed);
                 }
             }
             return result;

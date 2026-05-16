@@ -6,7 +6,7 @@ namespace Сoursework.Models.TypesOfQuestion
     {
         public string CorrectAnswer { get; set; }
 
-        public OpenQuestion(int id, string topic, DifficultyOfQuestion diff, string text, string correctAnswer) : base(id, topic, diff, text, correctAnswer)
+        public OpenQuestion(int id, Subject topic, DifficultyOfQuestion diff, string text, string correctAnswer) : base(id, topic, diff, text, correctAnswer)
         {
             CorrectAnswer = correctAnswer;
         }

@@ -10,19 +10,19 @@ namespace Сoursework.Storage
         private List<Question> questions = new();
         private int _count = 0;
 
-        public Question CreateSingleChoice(string topic, DifficultyOfQuestion diff, string text, string correctAnswer, List<string> options)
+        public Question CreateSingleChoice(Subject topic, DifficultyOfQuestion diff, string text, string correctAnswer, List<string> options)
         {
             SingleAnswerOption question = new(_count++, topic, diff, text, correctAnswer, options);
             return question;
         }
 
-        public Question CreateMultipleChoice(string topic, DifficultyOfQuestion diff, string text, string correctAnswers, List<string> options)
+        public Question CreateMultipleChoice(Subject topic, DifficultyOfQuestion diff, string text, string correctAnswers, List<string> options)
         {
             MultiAnswerOption question = new(_count++, topic, diff, text, correctAnswers, options);
             return question;
         }
 
-        public Question CreateOpenQuestion(string topic, DifficultyOfQuestion diff, string text, string correctAnswer)
+        public Question CreateOpenQuestion(Subject topic, DifficultyOfQuestion diff, string text, string correctAnswer)
         {
             OpenQuestion question = new(_count++, topic, diff, text, correctAnswer);
             return question;
@@ -47,7 +47,8 @@ namespace Сoursework.Storage
         {
             try
             {
-                PropertyInfo prop = question.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+                BindingFlags flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase;
+                PropertyInfo? prop = question.GetType().GetProperty(propertyName, flags);
 
                 if (prop != null && prop.CanWrite)
                 {

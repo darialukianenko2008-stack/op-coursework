@@ -6,19 +6,13 @@ namespace Сoursework.Models.TypesOfQuestion
     {
         public List<string> Options { get; set; } 
 
-        public SingleAnswerOption(int id, string topic, DifficultyOfQuestion diff, string text, string answer, List<string> options) : base(id, topic, diff, text, answer)
+        public SingleAnswerOption(int id, Subject topic, DifficultyOfQuestion diff, string text, string answer, List<string> options) : base(id, topic, diff, text, answer)
         {
             Options = options;
         }
 
-        public override bool CheckAnswer(string userAnswer)
-        {
-            if (int.TryParse(userAnswer, out int userIndex))
-            {
-                return Options[userIndex - 1] == Answer;
-            }
-            return false;
-        }
+        public override bool CheckAnswer(string userAnswer) =>
+            userAnswer.Trim().Equals(Answer, StringComparison.OrdinalIgnoreCase);
 
         public override string PrintQuestion()
         {
