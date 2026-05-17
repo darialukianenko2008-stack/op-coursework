@@ -138,7 +138,7 @@ namespace Сoursework.Menus
                     throw new FormatException("Id must be an intenger.");
                 }
 
-                Subject subject = _repo.GetSubjectById(id);
+                Subject? subject = _repo.GetSubjectById(id);
 
                 if (subject == null)
                 {

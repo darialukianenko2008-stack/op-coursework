@@ -157,7 +157,6 @@ namespace Сoursework.Menus
             }
         }
 
-
         private void ExecuteRemoveQuestion()
         {
             Console.Clear();

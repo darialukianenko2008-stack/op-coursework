@@ -23,9 +23,13 @@ namespace Сoursework.Models
         public Test CreateTest(int numberOfQuestions, Subject subject, Predicate<Question> predicate, QuestionRepo questionRepo)
         {
             Questions = questionRepo.GetAll();
-            if (numberOfQuestions == 0)
+            if (Questions.Count == 0)
             {
                 throw new Exception("Create some questions first.");
+            }
+            if (numberOfQuestions <= 0)
+            {
+                throw new Exception("Test has to contain at least 1 question.");
             }
 
             List<Question> sorted = Questions.Where(q => q.Topic == subject).Where(q => predicate(q)).ToList();
@@ -34,7 +38,6 @@ namespace Сoursework.Models
             List<Question> filtered = sorted.OrderBy(q => random.Next()).Take(numberOfQuestions).ToList();
 
             return new Test(Id++, filtered);
-
         }
 
         public void ShuffleTest()

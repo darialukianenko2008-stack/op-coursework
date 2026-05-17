@@ -46,7 +46,7 @@ namespace Сoursework.Models
 
         public override string ToString()
         {
-            return $"Id: {Id}, {Topic.Name}, {Difficulty}, {TextOfQuestion}, Answer: {Answer}, Success rate: {SuccessRate}.";
+            return $"Id: {Id}, {Topic.Name}, {Difficulty}, {TextOfQuestion}, Answer: {Answer}, Success rate: {SuccessRate}%.";
         }
     }
 }

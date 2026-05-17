@@ -92,7 +92,7 @@ namespace Сoursework.Menus
             }
 
             Console.WriteLine("Choose difficulty level:");
-            Console.WriteLine("1 - Easy\n2 - Medium\n3 - Hard\n4 - Any difficulty (All questions)");
+            Console.WriteLine("1 - Easy\n2 - Normal\n3 - Hard\n4 - Any difficulty (All questions)");
             string diffInput = Console.ReadLine();
 
             Predicate<Question> difficultyPredicate = q => true;
@@ -151,7 +151,7 @@ namespace Сoursework.Menus
                 {
                     for (int i = 0; i < options.Count; i++)
                     {
-                        Console.WriteLine($"  [{i + 1}] {options[i]}");
+                        Console.WriteLine($"{i + 1}. {options[i]}");
                     }
                 }
 
