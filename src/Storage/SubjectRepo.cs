@@ -4,18 +4,18 @@ namespace Сoursework.Storage
 {
     public class SubjectRepo
     {
-        private List<Subject> subjects = new();
-        private int count = -1;
+        private List<Subject> _subjects = new();
+        private int _count = -1;
 
         public Subject CreateSubject(string name)
         {
-            count++;
-            return new Subject(count, name);
+            _count++;
+            return new Subject(_count, name);
         }
 
         public void AddSubject(Subject subject)
         {
-            subjects.Add(subject);
+            _subjects.Add(subject);
         }
 
         public void UpdateName(string newName, Subject subject)
@@ -25,12 +25,12 @@ namespace Сoursework.Storage
 
         public void RemoveSubject(Subject subject)
         {
-            subjects.Remove(subject);
+            _subjects.Remove(subject);
         }
 
         public Subject? GetSubjectById(int id)
         {
-            foreach (Subject subject in subjects)
+            foreach (Subject subject in _subjects)
             {
                 if(subject.Id == id)
                 {
@@ -42,7 +42,7 @@ namespace Сoursework.Storage
 
         public void PrintSubjects()
         {
-            foreach (Subject subject in subjects)
+            foreach (Subject subject in _subjects)
             {
                 Console.WriteLine(subject.ToString());
             }

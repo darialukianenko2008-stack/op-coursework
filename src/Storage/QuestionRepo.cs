@@ -7,7 +7,7 @@ namespace Сoursework.Storage
 {
     public class QuestionRepo
     {
-        private List<Question> questions = new();
+        private List<Question> _questions = new();
         private int _count = 0;
 
         public Question CreateSingleChoice(Subject topic, DifficultyOfQuestion diff, string text, string correctAnswer, List<string> options)
@@ -30,17 +30,17 @@ namespace Сoursework.Storage
 
         public void AddQuestion(Question question)
         {
-            questions.Add(question);
+            _questions.Add(question);
         }
 
         public Question? GetQuestionById(int id)
         {
-            return questions.Find(q => q.Id == id);
+            return _questions.Find(q => q.Id == id);
         }
 
         public void RemoveQuestion(Question question)
         {
-            questions.Remove(question);
+            _questions.Remove(question);
         }
 
         public void UpdateQuestion<T>(string propertyName, T newValue, Question question)
@@ -71,12 +71,12 @@ namespace Сoursework.Storage
 
         public void PrintQuestions()
         {
-            foreach (Question question in questions)
+            foreach (Question question in _questions)
             {
                 Console.WriteLine(question.ToString());
             }
         }
 
-        public List<Question> GetAll() => questions;
+        public List<Question> GetAll() => _questions;
     }
 }

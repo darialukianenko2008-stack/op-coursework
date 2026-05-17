@@ -9,13 +9,13 @@ namespace Сoursework.Models
         public List<Question> Questions { get; set; } = new();
         public Dictionary<int, string> UserAnswers { get; set; } = new();
 
-        public Test(int id,  List<Question> questions)
+        public Test(int id, List<Question> questions)
         {
             Id = id;
             Questions = questions;
         }
 
-        private QuestionRepo questionRepo = new();
+        private QuestionRepo _questionRepo = new();
 
         public void AnswerQuestion(int questionId, string answer)
         {
@@ -24,7 +24,7 @@ namespace Сoursework.Models
 
         public Test CreateTest(int numberOfQuestions, Subject subject, Predicate<Question> predicate)
         {
-            Questions = questionRepo.GetAll();
+            Questions = _questionRepo.GetAll();
             if (numberOfQuestions == 0) throw new Exception("Create some questions first.");
 
             List<Question> sorted = Questions.Where(q => q.Topic == subject).Where(q => predicate(q)).ToList();
@@ -33,23 +33,35 @@ namespace Сoursework.Models
             List<Question> filtered = sorted.OrderBy(q => random.Next()).Take(numberOfQuestions).ToList();
 
             return new Test(Id++, filtered);
+
         }
 
         public void ShuffleTest()
         {
-            Random random = new();
-
-            Questions = Questions.OrderBy(q => random.Next()).ToList();
-
-            foreach (Question question in Questions)
+            try
             {
-                PropertyInfo? optionsProp = question.GetType().GetProperty("Options", BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                Random random = new();
 
-                if (optionsProp != null && optionsProp.GetValue(question) is List<string> options)
+                Questions = Questions.OrderBy(q => random.Next()).ToList();
+
+                foreach (Question question in Questions)
                 {
-                    List<string> shuffledOptions = options.OrderBy(o => random.Next()).ToList();
-                    optionsProp.SetValue(question, shuffledOptions);
+                    PropertyInfo? optionsProp = question.GetType().GetProperty("Options", BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+
+                    if (optionsProp != null && optionsProp.GetValue(question) is List<string> options)
+                    {
+                        List<string> shuffledOptions = options.OrderBy(o => random.Next()).ToList();
+                        optionsProp.SetValue(question, shuffledOptions);
+                    }
                 }
+            }
+            catch (TargetException tex)
+            {
+                Console.WriteLine(tex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }
