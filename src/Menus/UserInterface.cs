@@ -31,7 +31,7 @@ namespace Сoursework.Menus
                         QuestionMenu.InterfaceForQuestion(subjectRepo, questionRepo);
                         break;
                     case "3":
-                        TestMenu.MenuForTest();
+                        TestMenu.MenuForTest(subjectRepo, questionRepo);
                         break;
                     case "4":
                         break;
