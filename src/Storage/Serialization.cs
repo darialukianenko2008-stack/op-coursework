@@ -6,13 +6,13 @@ namespace Сoursework.Storage
 {
     public class Serialization
     {
-        private static readonly string _dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
+        public static readonly string DataDir = Path.Combine(AppContext.BaseDirectory, "Data");
 
-        private static readonly string _subjects = Path.Combine(_dataDir, "subjects.json");
+        private static readonly string _subjects = Path.Combine(DataDir, "subjects.json");
 
-        private static readonly string _questions = Path.Combine(_dataDir, "questions.json");
+        private static readonly string _questions = Path.Combine(DataDir, "questions.json");
 
-        private static readonly string _logs = Path.Combine(_dataDir, "logs.json");
+        private static readonly string _logs = Path.Combine(DataDir, "logs.json");
 
         private static readonly JsonSerializerOptions Options = new()
         {

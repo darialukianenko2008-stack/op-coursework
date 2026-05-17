@@ -6,6 +6,11 @@ namespace Сoursework.Menus
     {
         public static void UI()
         {
+            if (!Directory.Exists(Serialization.DataDir))
+            {
+                Directory.CreateDirectory(Serialization.DataDir);
+            }
+
             SubjectRepo subjectRepo = new();
             QuestionRepo questionRepo = new();
             LogRepo logRepo = new();
