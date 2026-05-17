@@ -17,9 +17,13 @@ namespace Сoursework.Storage
                     userAnswer = "No answer given.";
                 }
 
-                bool isCorrect = question.CheckAnswer(userAnswer);
+                question.TotalAttempts++;
+                if (question.CheckAnswer(userAnswer))
+                {
+                    question.CorrectAttempts++;
+                }
 
-                Log log = new Log { Id = _count++, SessionId = sessionId, QuestionId = question.Id, UserAnswer = userAnswer, WasCorrect = isCorrect };
+                Log log = new Log { Id = _count++, SessionId = sessionId, QuestionId = question.Id, UserAnswer = userAnswer, WasCorrect = question.CheckAnswer(userAnswer)};
 
                 logs.Add(log);
             }
@@ -72,6 +76,23 @@ namespace Сoursework.Storage
                 double percentage = Math.Round((double)correct / total * 100, 1);
 
                 Console.WriteLine($"Session id: {sessionId}, Accuracy: {percentage}%.");
+            }
+        }
+
+        public void PrintWrongAnswersForSession(int sessionId)
+        {
+            List<Log> wrongLogs = GetWrongAnswersBySession(sessionId);
+
+            if (wrongLogs.Count == 0)
+            {
+                Console.WriteLine($"Perfect score! No wrong answers found for session id {sessionId}.");
+                return;
+            }
+
+            Console.WriteLine($"Wrong answers for session id {sessionId}");
+            foreach (Log log in wrongLogs)
+            {
+                Console.WriteLine(log.ToString());
             }
         }
 

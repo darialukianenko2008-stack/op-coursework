@@ -15,17 +15,18 @@ namespace Сoursework.Models
             Questions = questions;
         }
 
-        private QuestionRepo _questionRepo = new();
-
         public void AnswerQuestion(int questionId, string answer)
         {
             UserAnswers[questionId] = answer;
         }
 
-        public Test CreateTest(int numberOfQuestions, Subject subject, Predicate<Question> predicate)
+        public Test CreateTest(int numberOfQuestions, Subject subject, Predicate<Question> predicate, QuestionRepo questionRepo)
         {
-            Questions = _questionRepo.GetAll();
-            if (numberOfQuestions == 0) throw new Exception("Create some questions first.");
+            Questions = questionRepo.GetAll();
+            if (numberOfQuestions == 0)
+            {
+                throw new Exception("Create some questions first.");
+            }
 
             List<Question> sorted = Questions.Where(q => q.Topic == subject).Where(q => predicate(q)).ToList();
 

@@ -62,6 +62,7 @@ namespace Сoursework.Menus
                 Subject newSubject = _repo.CreateSubject(name);
                 _repo.AddSubject(newSubject);
                 Console.WriteLine("Added successfully!");
+                Serialization.SaveSubjects(_repo);
             }
             catch (ArgumentException ex)
             {
@@ -103,6 +104,7 @@ namespace Сoursework.Menus
 
                 _repo.UpdateName(newName, subject);
                 Console.WriteLine("Name of the subject updated successfully!");
+                Serialization.SaveSubjects(_repo);
             }
             catch (FormatException ex)
             {
@@ -145,6 +147,7 @@ namespace Сoursework.Menus
 
                 _repo.RemoveSubject(subject);
                 Console.WriteLine("Deleted successfully.");
+                Serialization.SaveSubjects(_repo);
             }
             catch (FormatException ex)
             {

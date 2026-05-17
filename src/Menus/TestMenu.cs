@@ -13,15 +13,16 @@ namespace Сoursework.Menus
 
         private static int _testIdCounter = 1;
 
-        public TestMenu(SubjectRepo subjectRepo, QuestionRepo questionRepo)
+        public TestMenu(SubjectRepo subjectRepo, QuestionRepo questionRepo, LogRepo logRepo)
         {
             _subjectRepo = subjectRepo;
             _questionRepo = questionRepo;
+            _logRepo = logRepo;
         }
 
-        public static void MenuForTest(SubjectRepo subjectRepo, QuestionRepo questionRepo)
+        public static void MenuForTest(SubjectRepo subjectRepo, QuestionRepo questionRepo, LogRepo logRepo)
         {
-            TestMenu menu = new(subjectRepo, questionRepo);
+            TestMenu menu = new(subjectRepo, questionRepo, logRepo);
 
             bool isTrue = true;
             while (isTrue)
@@ -55,6 +56,7 @@ namespace Сoursework.Menus
                 RunQuizLoop(activeTest);
 
                 DisplayQuizResults(activeTest);
+                Serialization.SaveLogs(_logRepo);
             }
             catch (FormatException ex)
             {
@@ -91,7 +93,6 @@ namespace Сoursework.Menus
 
             Console.WriteLine("Choose difficulty level:");
             Console.WriteLine("1 - Easy\n2 - Medium\n3 - Hard\n4 - Any difficulty (All questions)");
-            Console.Write("Your choice: ");
             string diffInput = Console.ReadLine();
 
             Predicate<Question> difficultyPredicate = q => true;
@@ -122,7 +123,7 @@ namespace Сoursework.Menus
             Test generator = new Test(_testIdCounter++, new List<Question>());
             generator.Questions = _questionRepo.GetAll();
 
-            Test activeTest = generator.CreateTest(qCount, subject, difficultyPredicate);
+            Test activeTest = generator.CreateTest(qCount, subject, difficultyPredicate, _questionRepo);
 
             if (activeTest == null || activeTest.Questions.Count == 0)
             {
@@ -166,20 +167,12 @@ namespace Сoursework.Menus
         private void DisplayQuizResults(Test activeTest)
         {
             Console.Clear();
-            Console.WriteLine("You finished the test. Congrats!\n");
+            Console.WriteLine("You finished the test. Congrats!");
+            _logRepo.SaveSessionResult(activeTest, activeTest.Id);
 
-            int correctAnswersCount = 0;
-            foreach (Question question in activeTest.Questions)
-            {
-                string userAns = activeTest.UserAnswers[question.Id];
+            (int Correct, int All) score = _logRepo.GetSessionScore(activeTest.Id);
 
-                if (question.CheckAnswer(userAns))
-                {
-                    correctAnswersCount++;
-                }
-            }
-
-            Console.WriteLine($"Your result: {correctAnswersCount} out of {activeTest.Questions.Count} correct.");
+            Console.WriteLine($"Your result: {score.Correct} out of {score.All} correct.");
         }
     }
 }

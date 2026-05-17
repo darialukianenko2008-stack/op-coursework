@@ -1,0 +1,16 @@
+[
+  {
+    "Id": 1,
+    "SessionId": 1,
+    "QuestionId": 0,
+    "UserAnswer": "4",
+    "WasCorrect": true
+  },
+  {
+    "Id": 2,
+    "SessionId": 2,
+    "QuestionId": 0,
+    "UserAnswer": "1",
+    "WasCorrect": false
+  }
+]

@@ -11,6 +11,8 @@ namespace Сoursework.Models.TypesOfQuestion
             CorrectAnswer = correctAnswer;
         }
 
+        public OpenQuestion() { }
+
         public override bool CheckAnswer(string userAnswer) =>
             userAnswer.Trim().Equals(Answer, StringComparison.OrdinalIgnoreCase);
 

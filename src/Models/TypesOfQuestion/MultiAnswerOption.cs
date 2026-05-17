@@ -10,6 +10,8 @@ namespace Сoursework.Models.TypesOfQuestion
         {
             Options = options;
         }
+        
+        public MultiAnswerOption() { }
 
         public override bool CheckAnswer(string userAnswer)
         {

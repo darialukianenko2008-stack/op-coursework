@@ -1,17 +1,24 @@
+using System.Text.Json.Serialization;
 using Сoursework.Enums;
 using Сoursework.Interfaces;
+using Сoursework.Models.TypesOfQuestion;
 
 namespace Сoursework.Models
 {
+    [JsonDerivedType(typeof(SingleAnswerOption), typeDiscriminator: "single")]
+    [JsonDerivedType(typeof(MultiAnswerOption), typeDiscriminator: "multiple")]
+    [JsonDerivedType(typeof(OpenQuestion), typeDiscriminator: "open")]
     public abstract class Question : IIdentifiable, IPrintable
     {
-        public int Id { get; }
-        public Subject Topic { get; }
+        public int Id { get; set; }
+        [JsonIgnore]
+        public Subject Topic { get; set; }
+        public int SubjectId { get; set; }
         public DifficultyOfQuestion Difficulty { get; set; }
         public string TextOfQuestion { get; set; }
         public string Answer { get; set; }
-        public int TotalAttempts { get; private set; } = 0;
-        public int CorrectAttempts { get; private set; } = 0;
+        public int TotalAttempts { get; set; }
+        public int CorrectAttempts { get; set; }
 
         public double SuccessRate
         {
@@ -29,23 +36,17 @@ namespace Сoursework.Models
             Difficulty = difficulty;
             TextOfQuestion = textOfQuestion;
             Answer = answer;
+            SubjectId = topic.Id;
         }
+
+        public Question() { }
 
         public abstract bool CheckAnswer(string answer);
         public abstract string PrintQuestion();
 
-        public void UpdateStatistics(bool isCorrect)
-        {
-            TotalAttempts++;
-            if (isCorrect)
-            {
-                CorrectAttempts++;
-            }
-        }
-
         public override string ToString()
         {
-            return $"Id: {Id}, {Topic}, {Difficulty}, {TextOfQuestion}, Answer: {Answer}, Success rate: {SuccessRate}.";
+            return $"Id: {Id}, {Topic.Name}, {Difficulty}, {TextOfQuestion}, Answer: {Answer}, Success rate: {SuccessRate}.";
         }
     }
 }

@@ -84,6 +84,7 @@ namespace Сoursework.Menus
                 Question q = _questionRepo.CreateSingleChoice(subject, diff, text, correctAnswer, options);
                 _questionRepo.AddQuestion(q);
                 Console.WriteLine("Single choice question added successfully!");
+                Serialization.SaveQuestions(_questionRepo);
             }
             catch (Exception ex)
             {
@@ -118,6 +119,7 @@ namespace Сoursework.Menus
                 Question q = _questionRepo.CreateMultipleChoice(subject, diff, text, correctAnswers, options);
                 _questionRepo.AddQuestion(q);
                 Console.WriteLine("Multiple choice question added successfully!");
+                Serialization.SaveQuestions(_questionRepo);
             }
             catch (Exception ex)
             {
@@ -147,6 +149,7 @@ namespace Сoursework.Menus
                 Question q = _questionRepo.CreateOpenQuestion(subject, diff, text, correctAnswer);
                 _questionRepo.AddQuestion(q);
                 Console.WriteLine("Open question added successfully!");
+                Serialization.SaveQuestions(_questionRepo);
             }
             catch (Exception ex)
             {
@@ -175,6 +178,7 @@ namespace Сoursework.Menus
 
                 _questionRepo.RemoveQuestion(question);
                 Console.WriteLine("Question deleted successfully.");
+                Serialization.SaveQuestions(_questionRepo);
             }
             catch (Exception ex)
             {
@@ -209,6 +213,7 @@ namespace Сoursework.Menus
 
                 _questionRepo.UpdateQuestion(propName, newValue, question);
                 Console.WriteLine("Question updated successfully!");
+                Serialization.SaveQuestions(_questionRepo);
             }
             catch (Exception ex)
             {
