@@ -6,9 +6,13 @@ namespace Сoursework.Storage
 {
     public class Serialization
     {
-        private static readonly string _SubjectsFile = Path.Combine("Data", "subjects.json");
-        private static readonly string _QuestionsFile = Path.Combine("Data", "questions.json");
-        private static readonly string _LogsFile = Path.Combine("Data", "logs.json");
+        private static readonly string _dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
+
+        private static readonly string _subjects = Path.Combine(_dataDir, "subjects.json");
+
+        private static readonly string _questions = Path.Combine(_dataDir, "questions.json");
+
+        private static readonly string _logs = Path.Combine(_dataDir, "logs.json");
 
         private static readonly JsonSerializerOptions Options = new()
         {
@@ -20,7 +24,7 @@ namespace Сoursework.Storage
         {
             try
             {
-                string? directory = Path.GetDirectoryName(_SubjectsFile);
+                string? directory = Path.GetDirectoryName(_subjects);
 
                 if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                 {
@@ -28,7 +32,7 @@ namespace Сoursework.Storage
                 }
 
                 string json = JsonSerializer.Serialize(subjectRepo.GetAll(), Options);
-                File.WriteAllText(_SubjectsFile, json);
+                File.WriteAllText(_subjects, json);
             }
             catch (Exception ex)
             {
@@ -40,9 +44,9 @@ namespace Сoursework.Storage
         {
             try
             {
-                if (!File.Exists(_SubjectsFile)) return;
+                if (!File.Exists(_subjects)) return;
 
-                string json = File.ReadAllText(_SubjectsFile);
+                string json = File.ReadAllText(_subjects);
                 List<Subject>? list = JsonSerializer.Deserialize<List<Subject>>(json, Options);
 
                 if (list != null)
@@ -63,7 +67,7 @@ namespace Сoursework.Storage
         {
             try
             {
-                string? directory = Path.GetDirectoryName(_QuestionsFile);
+                string? directory = Path.GetDirectoryName(_questions);
 
                 if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                 {
@@ -71,7 +75,7 @@ namespace Сoursework.Storage
                 }
 
                 string json = JsonSerializer.Serialize(questionRepo.GetAll(), Options);
-                File.WriteAllText(_QuestionsFile, json);
+                File.WriteAllText(_questions, json);
             }
             catch (Exception ex)
             {
@@ -83,9 +87,9 @@ namespace Сoursework.Storage
         {
             try
             {
-                if (!File.Exists(_QuestionsFile)) return;
+                if (!File.Exists(_questions)) return;
 
-                string json = File.ReadAllText(_QuestionsFile);
+                string json = File.ReadAllText(_questions);
                 List<Question>? list = JsonSerializer.Deserialize<List<Question>>(json, Options);
 
                 if (list != null)
@@ -106,7 +110,7 @@ namespace Сoursework.Storage
         {
             try
             {
-                string? directory = Path.GetDirectoryName(_LogsFile);
+                string? directory = Path.GetDirectoryName(_logs);
 
                 if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                 {
@@ -114,7 +118,7 @@ namespace Сoursework.Storage
                 }
 
                 string json = JsonSerializer.Serialize(logRepo.GetAll(), Options);
-                File.WriteAllText(_LogsFile, json);
+                File.WriteAllText(_logs, json);
             }
             catch (Exception ex)
             {
@@ -126,9 +130,9 @@ namespace Сoursework.Storage
         {
             try
             {
-                if (!File.Exists(_LogsFile)) return;
+                if (!File.Exists(_logs)) return;
 
-                string json = File.ReadAllText(_LogsFile);
+                string json = File.ReadAllText(_logs);
                 List<Log>? list = JsonSerializer.Deserialize<List<Log>>(json, Options);
 
                 if (list != null)
